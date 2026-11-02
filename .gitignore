@@ -1,0 +1,25 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+dist/
+build/
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Local Docker runtime data
+warehouse/
+spark-ivy/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp
