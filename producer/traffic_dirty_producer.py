@@ -10,7 +10,7 @@ fake = Faker()
 
 producer = KafkaProducer(
     bootstrap_servers="localhost:29092",
-     value_serializer=lambda v:json.dumps(v).encode("utf-8") # passes the value v which is to be serialized into json.dumps function which maps a python dict to a JSON string (which is serializable)
+    value_serializer=lambda v:json.dumps(v).encode("utf-8") # passes the value v which is to be serialized into json.dumps function which maps a python dict to a JSON string (which is serializable)
     # UTF stands for Unicode Transformation Format.
     # It is a standard character encoding system that converts universal text characters into binary byte sequences. Since strings cannot be streamed, we convert them into bytes using UTF-8 in this case. 
     # Then at the receiver side, these will be decoded using utf-8 to get the values.
@@ -102,10 +102,10 @@ while True:
         event = generate_dirty_event()
     
     if isinstance(event, str):
-        producer.send("traffic-topic",  value={"raw": event})
+        producer.send("traffic-data",  value={"raw": event})
         print("CORRUPT EVENT SENT")
     else:
-        producer.send("traffic-topic", value=event)
+        producer.send("traffic-data", value=event)
         print(event)
 
     time.sleep(random.uniform(0.5,1.5)) # same as random.random() except that it accepts custom range (generates float numbers too)

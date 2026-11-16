@@ -3,9 +3,13 @@ uv init
 uv add kafka-python faker pytz
 
 # Create Kafka Topic
-docker exec -it kafka /opt/kafka/bin/kafka-topics.sh --create --topic traffic-topic --bootstrap-server kafka:9092 --partitions 3 --replication-factor 1
+docker exec -it kafka /opt/kafka/bin/kafka-topics.sh --create --topic traffic-topic --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1
+# Update Kafka Topic (partition count to 3)
+docker exec -it kafka-traffic-events /opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --alter --topic traffic-data --partitions 3
 
-# Run Bronze Transformation
+# Run Bronze Transformation 
+# Clarify spark-worker and spark-master here 
+# Ivy refers to the path where packages will be downloaded and saved
 docker exec -it spark-worker /opt/spark/bin/spark-submit --conf spark.jars.ivy=/tmp/.ivy --packages io.delta:delta-spark_2.12:3.2.0,org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1 /opt/spark-apps/traffic_bronze.py
 
 # Run Silver Transformation
